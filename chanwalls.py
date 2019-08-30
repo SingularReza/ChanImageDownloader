@@ -15,10 +15,15 @@ soup = BeautifulSoup(response.text, "html.parser")
 thread_name = soup.find('span', {'class': 'subject'}).string
 images = soup.findAll('a', {'class': 'fileThumb'})
 
+#prints total number of images to be downloaded
+print("No of images to be downloaded: ", len(images))
+
 # creates the folder
 os.mkdir(thread_name)
 
-for img in images:
+for index, img in enumerate(images):
 	# gets image name from the last part of href
 	img_name = img.get('href').split('/')
 	urllib.request.urlretrieve('https:'+img.get('href'), os.path.join(thread_name, img_name[-1]))
+	print("Image {0} downloaded".format(index))
+
